@@ -1,4 +1,4 @@
-package com.example.itemhub.ui.adapter
+package com.example.itemhub.ui.main.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -16,16 +16,11 @@ class PostItemViewHolder(
     private val favoriteChangeListener: FavoriteChangeListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    companion object {
-        private const val EXTRA_POST_INFORMATION = "post_information"
-        private const val MIME_TYPE_TEXT_PLAIN = "text/plain"
-    }
-
     fun bind(post: Post) {
         bindPostInfo(post)
         setupFavoriteButton(post)
         setupShareButton(post)
-        loadPostImage()
+        loadPostImage(post)
     }
 
     private fun bindPostInfo(post: Post) {
@@ -55,13 +50,18 @@ class PostItemViewHolder(
         }
     }
 
-    private fun loadPostImage() {
+    private fun loadPostImage(post: Post) {
         Glide.with(context)
-            .load(R.drawable.post)
+            .load(post.getPhoto())
             .placeholder(R.drawable.placeholder)
             .fitCenter()
             .error(R.drawable.error_img)
             .circleCrop()
             .into(binding.imageView)
+    }
+
+    companion object {
+        private const val EXTRA_POST_INFORMATION = "post_information"
+        private const val MIME_TYPE_TEXT_PLAIN = "text/plain"
     }
 }

@@ -11,9 +11,4 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val postRepo: PostRepo
 ) : ViewModel() {
-    fun filterList(query: String?): List<Post> {
-        return postRepo.getAllPosts().filter { post ->
-            query.isNullOrBlank() || post.getTitle().contains(query, ignoreCase = true)
-        }
-    }
 }

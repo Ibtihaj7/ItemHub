@@ -6,28 +6,43 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itemhub.model.Post
 import com.example.itemhub.repo.post.PostRepo
-import com.example.itemhub.repo.post.PostRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val postRepo: PostRepo
-):ViewModel() {
+) : ViewModel() {
     private val mutablePostsList: MutableLiveData<List<Post>> = MutableLiveData()
-    private val mutableFavoritePostsList: MutableLiveData<Set<Int>> = MutableLiveData()
+    val postsList: LiveData<List<Post>> = mutablePostsList
+
+    private val _favoritesLiveData = MutableLiveData<List<Post>>()
+    val favoritesLiveData: LiveData<List<Post>> = _favoritesLiveData
+
     init {
         updatePostsList()
     }
-    fun getPostsList(): LiveData<List<Post>> = mutablePostsList
-    fun getFavoritePostsList(): LiveData<Set<Int>> = mutableFavoritePostsList
+
 
     private fun updatePostsList() {
-        viewModelScope.launch{
-            postRepo.fetchPosts()
+        viewModelScope.launch {
             mutablePostsList.value = postRepo.getAllPosts()
-            mutableFavoritePostsList.value = postRepo.getFavoriteIdPosts()
+            _favoritesLiveData.value = postRepo.getFavoritePosts()
+        }
+    }
+
+    fun filterList(query: String?) {
+        viewModelScope.launch {
+            val allData = postRepo.getAllPosts()
+            if (query.isNullOrBlank()) {
+                mutablePostsList.value = allData
+                return@launch
+            }
+
+            mutablePostsList.value = allData.filter { post ->
+                query.isNullOrBlank() || post.getTitle().contains(query, ignoreCase = true)
+            }
         }
     }
 

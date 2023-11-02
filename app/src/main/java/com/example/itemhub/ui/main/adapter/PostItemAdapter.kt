@@ -1,4 +1,4 @@
-package com.example.itemhub.ui.adapter
+package com.example.itemhub.ui.main.adapter
 
 import android.content.Context
 import android.content.Intent

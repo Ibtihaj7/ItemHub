@@ -11,16 +11,24 @@ import javax.inject.Singleton
 @Singleton
 class PostRepoImpl @Inject constructor(
     private val postsClientRepo: PostsClientRepo
-) : PostRepo{
+) : PostRepo {
     private val allPostsList: ArrayList<Post> = ArrayList()
     private val favoritePostsIdList: MutableSet<Int> = mutableSetOf()
 
-    override fun getAllPosts(): List<Post> = allPostsList.toList()
-    override fun getFavoriteIdPosts(): Set<Int> = favoritePostsIdList
-    override suspend fun fetchPosts() {
-        if(allPostsList.isEmpty()){
+    override suspend fun getAllPosts(forceRefresh: Boolean): List<Post> {
+        if (allPostsList.isEmpty() || forceRefresh) {
             val posts = getPostsFromApi()
+            allPostsList.clear()
             allPostsList.addAll(posts)
+        }
+
+        return allPostsList.toList()
+    }
+
+    override suspend fun getFavoritePosts(): List<Post> {
+        val allPosts = getAllPosts()
+        return allPosts.filter { post ->
+            post.getId() in favoritePostsIdList
         }
     }
 
