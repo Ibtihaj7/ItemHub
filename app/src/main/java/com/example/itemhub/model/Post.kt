@@ -8,6 +8,7 @@ data class Post(
     private var isFavorite:Boolean=false,
 ){
     fun getId():Int = id
+    fun getUserId():Int = userId
     fun getTitle():String = title
     fun getBody():String = body
     fun getFavoriteState():Boolean = isFavorite

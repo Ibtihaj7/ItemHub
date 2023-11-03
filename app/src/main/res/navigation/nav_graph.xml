@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment1"
-        android:name="com.example.itemhub.ui.main.home.HomeFragment1"
+        android:name="com.example.itemhub.ui.main.home.HomeFragment"
         android:label="fragment_home1"
-        tools:layout="@layout/fragment_home1" >
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment1_to_favoriteContacts"
             app:destination="@id/favoriteContacts" />
@@ -32,5 +32,20 @@
     android:label="fragment_post_detail"
     tools:layout="@layout/fragment_post_detail" >
 
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="body"
+            app:argType="string" />
+        <argument
+            android:name="photo"
+            app:argType="string" />
     </fragment>
 </navigation>

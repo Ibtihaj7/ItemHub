@@ -53,4 +53,11 @@ class MainViewModel @Inject constructor(
         }
         updatePostsList()
     }
+
+    fun loadPostsData() {
+        viewModelScope.launch {
+            _mutablePostsList.value = postRepo.getAllPosts(true)
+            _favoritesLiveData.value = postRepo.getFavoritePosts()
+        }
+    }
 }
