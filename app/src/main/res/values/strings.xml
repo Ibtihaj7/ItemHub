@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">ItemHub</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_items_to_display">No items to display</string>
+    <string name="no_results_found">No Results Found</string>
+    <string name="home_title_bottom_bar">Home</string>
+    <string name="favorite_title_bottom_bar">Favorite</string>
 </resources>

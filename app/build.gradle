@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.dagger.hilt.android'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -73,6 +75,9 @@ dependencies {
 
     //viewModelScope
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+
+    //cardView
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
 
 kapt {

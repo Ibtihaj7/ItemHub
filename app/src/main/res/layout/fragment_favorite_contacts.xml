@@ -24,5 +24,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_items_to_display"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/favorite_posts_rv"
+            app:layout_constraintEnd_toEndOf="@+id/favorite_posts_rv"
+            app:layout_constraintStart_toStartOf="@+id/favorite_posts_rv"
+            app:layout_constraintTop_toTopOf="@+id/favorite_posts_rv" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

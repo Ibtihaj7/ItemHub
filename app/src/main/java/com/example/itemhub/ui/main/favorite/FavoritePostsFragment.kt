@@ -5,58 +5,61 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.itemhub.R
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.databinding.FragmentFavoriteContactsBinding
 import com.example.itemhub.model.Post
-import com.example.itemhub.ui.main.SharedViewModel
-import com.example.itemhub.ui.adapter.PostItemAdapter
+import com.example.itemhub.ui.main.MainViewModel
+import com.example.itemhub.ui.main.PostDetailListener
+import com.example.itemhub.ui.main.adapter.PostItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritePostsFragment : Fragment(), FavoriteChangeListener {
+class FavoritePostsFragment : Fragment(), FavoriteChangeListener, PostDetailListener {
     private lateinit var binding: FragmentFavoriteContactsBinding
     private lateinit var favoritesPostsAdapter: PostItemAdapter
-    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var recyclerview: RecyclerView
-    private val viewModel: FavoritePostsViewModel by viewModels()
+    private lateinit var emptyView: TextView
+    private lateinit var homeNavController: NavController
+
+    private val sharedViewModel: MainViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoriteContactsBinding.inflate(inflater)
-        setupUI()
-
-        sharedViewModel.getFavoritePostsList().observe(viewLifecycleOwner, Observer{ favoritePostsIdList ->
-            val newData = viewModel.filterData()
-            favoritesPostsAdapter.updateData(newData)
-        })
-
+        emptyView = binding.emptyView
+        setupRecyclerView()
+        observeFavorites()
+        homeNavController = findNavController()
         return binding.root
     }
-    private fun setupUI() {
-        setupRecyclerView()
-        observeSharedViewModel()
+
+    private fun observeFavorites() {
+        sharedViewModel.favoritesLiveData.observe(viewLifecycleOwner) {
+            favoritesPostsAdapter.updateData(it)
+            emptyView.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
+        }
     }
+
     private fun setupRecyclerView() {
         recyclerview = binding.favoritePostsRv
         recyclerview.layoutManager = LinearLayoutManager(activity)
-        favoritesPostsAdapter = PostItemAdapter(requireContext(), emptyList(), this)
+        favoritesPostsAdapter = PostItemAdapter(requireContext(), emptyList(), this,this)
         recyclerview.adapter = favoritesPostsAdapter
-    }
-
-    private fun observeSharedViewModel() {
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedViewModel.getFavoritePostsList().observe(viewLifecycleOwner) {
-            favoritesPostsAdapter.notifyDataSetChanged()
-        }
     }
 
     override fun onFavoriteChanged(post: Post) {
         sharedViewModel.onFavoriteChanged(post)
+    }
+    override fun onCardViewClicked(post: Post) {
+        homeNavController.navigate(R.id.postDetailFragment)
     }
 }
