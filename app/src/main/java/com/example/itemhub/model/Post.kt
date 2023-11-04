@@ -6,7 +6,7 @@ data class Post(
     private var title:String,
     private var body:String,
     private var isFavorite:Boolean=false,
-){
+) {
     fun getId():Int = id
     fun getUserId():Int = userId
     fun getTitle():String = title

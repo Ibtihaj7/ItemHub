@@ -27,7 +27,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="7dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/photo_description"/>
 
             <TextView
                 android:id="@+id/titleTextView"
@@ -49,7 +50,9 @@
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintEnd_toStartOf="@+id/share_btn"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_heart" />
+                app:srcCompat="@drawable/empty_heart"
+                android:contentDescription="@string/heart_button_description"
+                />
 
             <ImageButton
                 android:id="@+id/share_btn"
@@ -60,7 +63,9 @@
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/share" />
+                app:srcCompat="@drawable/share"
+                android:contentDescription="@string/share_button_description"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

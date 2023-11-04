@@ -5,4 +5,8 @@
     <string name="no_results_found">No Results Found</string>
     <string name="home_title_bottom_bar">Home</string>
     <string name="favorite_title_bottom_bar">Favorite</string>
+    <string name="photo_description">Photo</string>
+    <string name="heart_button_description">Heart Button</string>
+    <string name="share_button_description">Share Button</string>
+    <string name="description_label">Description:</string>
 </resources>

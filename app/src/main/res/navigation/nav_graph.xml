@@ -27,25 +27,14 @@
             app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
-    android:id="@+id/postDetailFragment"
-    android:name="com.example.itemhub.PostDetailFragment"
-    android:label="fragment_post_detail"
-    tools:layout="@layout/fragment_post_detail" >
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.itemhub.ui.main.postdetail.PostDetailFragment"
+        android:label="fragment_post_detail"
+        tools:layout="@layout/fragment_post_detail" >
 
         <argument
-            android:name="id"
+            android:name="postId"
             app:argType="integer" />
-        <argument
-            android:name="userId"
-            app:argType="integer" />
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="body"
-            app:argType="string" />
-        <argument
-            android:name="photo"
-            app:argType="string" />
     </fragment>
+
 </navigation>

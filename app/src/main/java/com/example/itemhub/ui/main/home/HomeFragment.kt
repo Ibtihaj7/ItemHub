@@ -40,6 +40,11 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
         homeNavController = findNavController()
         setupUI()
         setupSwipeRefreshLayout()
+
+        sharedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
         return binding.root
     }
 
@@ -103,12 +108,7 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
     }
 
     override fun onCardViewClicked(post: Post) {
-        val id = post.getId()
-        val userId = post.getUserId()
-        val title = post.getTitle()
-        val body = post.getBody()
-        val photo = post.getPhoto()
-        val action = HomeFragmentDirections.actionHomeFragment1ToPostDetailFragment(id,userId,title,body,photo)
+        val action = HomeFragmentDirections.actionHomeFragment1ToPostDetailFragment(post.getId())
         homeNavController.navigate(action)
     }
 }
