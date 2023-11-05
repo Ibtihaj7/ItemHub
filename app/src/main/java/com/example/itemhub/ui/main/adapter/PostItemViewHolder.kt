@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.itemhub.R
 import com.example.itemhub.databinding.CustomPostBinding
 import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.ui.main.PostDetailListener
 import com.google.gson.Gson
@@ -20,7 +21,7 @@ class PostItemViewHolder(
     private val postDetailListener : PostDetailListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(post: Post) {
+    fun bind(post: PostItem) {
         bindPostInfo(post)
         setupFavoriteButton(post)
         setupShareButton(post)
@@ -28,21 +29,21 @@ class PostItemViewHolder(
         t(post)
     }
 
-    private fun bindPostInfo(post: Post) {
+    private fun bindPostInfo(post: PostItem) {
         binding.postInfo = post
     }
 
-    private fun setupFavoriteButton(post: Post) {
+    private fun setupFavoriteButton(post: PostItem) {
         val heartBtnResource = if (post.getFavoriteState()) R.drawable.fill_heart else R.drawable.empty_heart
         binding.heartBtn.setImageResource(heartBtnResource)
 
         binding.heartBtn.setOnClickListener {
-            post.setFavoriteState(!post.getFavoriteState())
+
             favoriteChangeListener.onFavoriteChanged(post)
         }
     }
 
-    private fun setupShareButton(post: Post) {
+    private fun setupShareButton(post: PostItem) {
         binding.shareBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = MIME_TYPE_TEXT_PLAIN
@@ -65,7 +66,7 @@ class PostItemViewHolder(
             .into(binding.imageView)
     }
 
-    fun t( post:Post){
+    fun t( post:PostItem){
         itemView.setOnClickListener {
            postDetailListener.onCardViewClicked(post)
         }

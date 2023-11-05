@@ -7,18 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.databinding.CustomPostBinding
-import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.ui.main.PostDetailListener
 
 class PostItemAdapter(
     private val context: Context,
-    private var posts: List<Post>,
     private val favoriteChangeListener: FavoriteChangeListener,
     private val postDetailListener : PostDetailListener
-) : ListAdapter<Post, PostItemViewHolder>(DiffCallback()) {
-    fun updateData(newPosts: List<Post>) {
-        posts = newPosts
-        notifyDataSetChanged()
+) : ListAdapter<PostItem, PostItemViewHolder>(DiffCallback()) {
+    fun updateData(newPosts: List<PostItem>) {
+       submitList(newPosts)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,18 +24,16 @@ class PostItemAdapter(
         return PostItemViewHolder(binding, context, favoriteChangeListener,postDetailListener)
     }
 
-    override fun getItemCount(): Int = posts.size
-
     override fun onBindViewHolder(holder: PostItemViewHolder, position: Int) {
-        val currentPost = posts[position]
+        val currentPost = getItem(position)
         holder.bind(currentPost)
     }
 
-    class DiffCallback:DiffUtil.ItemCallback<Post>(){
-        override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+    class DiffCallback:DiffUtil.ItemCallback<PostItem>(){
+        override fun areItemsTheSame(oldItem: PostItem, newItem: PostItem) =
             oldItem.getId() == newItem.getId()
 
-        override fun areContentsTheSame(oldItem: Post, newItem: Post) =
+        override fun areContentsTheSame(oldItem: PostItem, newItem: PostItem) =
             oldItem == newItem
     }
 }

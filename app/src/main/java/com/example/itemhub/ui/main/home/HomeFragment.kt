@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itemhub.databinding.FragmentHomeBinding
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.ui.main.MainViewModel
 import com.example.itemhub.ui.main.PostDetailListener
 import com.example.itemhub.ui.main.adapter.PostItemAdapter
@@ -29,7 +30,6 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
     private lateinit var homeNavController: NavController
 
     private val sharedViewModel: MainViewModel by activityViewModels()
-
     private var handler:Handler? = null
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
     private fun setupRecyclerView() {
         recyclerview = binding.homeRv
         recyclerview.layoutManager = LinearLayoutManager(requireActivity())
-        allPostsAdapter = PostItemAdapter(requireContext(), emptyList(), this,this)
+        allPostsAdapter = PostItemAdapter(requireContext(), this,this)
         recyclerview.adapter = allPostsAdapter
     }
 
@@ -103,11 +103,11 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
         }
     }
 
-    override fun onFavoriteChanged(post: Post) {
+    override fun onFavoriteChanged(post: PostItem) {
         sharedViewModel.onFavoriteChanged(post)
     }
 
-    override fun onCardViewClicked(post: Post) {
+    override fun onCardViewClicked(post: PostItem) {
         val action = HomeFragmentDirections.actionHomeFragment1ToPostDetailFragment(post.getId())
         homeNavController.navigate(action)
     }

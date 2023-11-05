@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.itemhub.R
 import com.example.itemhub.databinding.FragmentPostDetailBinding
 import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.ui.main.MainViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +45,7 @@ class PostDetailFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupPostViews(post: Post) {
+    private fun setupPostViews(post: PostItem) {
         Glide.with(requireContext())
             .load(post.getPhoto())
             .centerCrop()
@@ -52,15 +53,14 @@ class PostDetailFragment : Fragment() {
             .into(binding.photoImageView)
     }
 
-    private fun setupFavoriteButton(post: Post) {
+    private fun setupFavoriteButton(post: PostItem) {
         binding.heartBtn.setOnClickListener {
-            post.setFavoriteState(!post.getFavoriteState())
             sharedViewModel.onFavoriteChanged(post)
             viewModel.setPost(post)
         }
     }
 
-    private fun setupShareButton(post: Post) {
+    private fun setupShareButton(post: PostItem) {
         binding.shareBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = MIME_TYPE_TEXT_PLAIN

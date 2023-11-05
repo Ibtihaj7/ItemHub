@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.databinding.FragmentFavoriteContactsBinding
 import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.ui.main.MainViewModel
 import com.example.itemhub.ui.main.PostDetailListener
 import com.example.itemhub.ui.main.adapter.PostItemAdapter
@@ -46,7 +47,7 @@ class FavoritePostsFragment : Fragment(), FavoriteChangeListener, PostDetailList
     private fun setupRecyclerView() {
         recyclerview = binding.favoritePostsRv
         recyclerview.layoutManager = LinearLayoutManager(activity)
-        favoritesPostsAdapter = PostItemAdapter(requireContext(), emptyList(), this,this)
+        favoritesPostsAdapter = PostItemAdapter(requireContext(), this,this)
         recyclerview.adapter = favoritesPostsAdapter
     }
 
@@ -57,10 +58,11 @@ class FavoritePostsFragment : Fragment(), FavoriteChangeListener, PostDetailList
         }
     }
 
-    override fun onFavoriteChanged(post: Post) {
+    override fun onFavoriteChanged(post: PostItem) {
         sharedViewModel.onFavoriteChanged(post)
     }
-    override fun onCardViewClicked(post: Post) {
+
+    override fun onCardViewClicked(post: PostItem) {
         val action = FavoritePostsFragmentDirections.actionFavoriteContactsToPostDetailFragment2(post.getId())
         homeNavController.navigate(action)
     }

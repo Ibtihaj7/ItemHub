@@ -1,7 +1,7 @@
 package com.example.itemhub.ui.main
 
-import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 
 interface PostDetailListener {
-    fun onCardViewClicked(post: Post)
+    fun onCardViewClicked(post: PostItem)
 }

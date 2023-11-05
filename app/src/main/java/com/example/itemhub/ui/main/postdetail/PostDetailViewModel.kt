@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.itemhub.model.Post
+import com.example.itemhub.model.PostItem
 import com.example.itemhub.repo.post.PostRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -12,11 +13,11 @@ import javax.inject.Inject
 class PostDetailViewModel @Inject constructor(
     private val postRepo: PostRepo
 ): ViewModel() {
-    private val _post = MutableLiveData<Post>()
-    val post: LiveData<Post>
+    private val _post = MutableLiveData<PostItem>()
+    val post: LiveData<PostItem>
         get() = _post
 
-    fun setPost(post: Post) {
+    fun setPost(post: PostItem) {
         _post.value = post
     }
 
