@@ -7,4 +7,5 @@ interface PostRepo {
     suspend fun getFavoritePosts(): List<Post>
     fun addToFavorites(post: Post)
     fun removeFromFavorites(post: Post)
+    fun getPost(postId: Int): Post
 }

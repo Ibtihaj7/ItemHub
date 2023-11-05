@@ -39,12 +39,7 @@ class PostDetailFragment : Fragment() {
         setupPostViews(post)
         setupFavoriteButton(post)
         setupShareButton(post)
-
-        viewModel.post.observe(viewLifecycleOwner) { post ->
-            binding.post = post
-            val heartBtnResource = if (post.getFavoriteState()) R.drawable.fill_heart else R.drawable.empty_heart
-            binding.heartBtn.setImageResource(heartBtnResource)
-        }
+        observePost()
 
         return binding.root
     }
@@ -59,9 +54,9 @@ class PostDetailFragment : Fragment() {
 
     private fun setupFavoriteButton(post: Post) {
         binding.heartBtn.setOnClickListener {
-            val updatedPost = post.copy(isFavorite = !post.getFavoriteState())
-            sharedViewModel.onFavoriteChanged(updatedPost)
-            viewModel.setPost(updatedPost)
+            post.setFavoriteState(!post.getFavoriteState())
+            sharedViewModel.onFavoriteChanged(post)
+            viewModel.setPost(post)
         }
     }
 
@@ -74,6 +69,14 @@ class PostDetailFragment : Fragment() {
             intent.putExtra(EXTRA_POST_INFORMATION, json)
 
             context?.startActivity(intent)
+        }
+    }
+
+    private fun observePost() {
+        viewModel.post.observe(viewLifecycleOwner) { post ->
+            binding.post = post
+            val heartBtnResource = if (post.getFavoriteState()) R.drawable.fill_heart else R.drawable.empty_heart
+            binding.heartBtn.setImageResource(heartBtnResource)
         }
     }
 

@@ -53,4 +53,10 @@ class PostRepoImpl @Inject constructor(
     override fun removeFromFavorites(post: Post) {
         favoritePostsIdList.remove(post.getId())
     }
+
+    override fun getPost(postId: Int): Post {
+        return allPostsList.first { post ->
+            post.getId() == postId
+        }
+    }
 }

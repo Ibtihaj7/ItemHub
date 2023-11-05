@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.itemhub.R
 import com.example.itemhub.ui.main.FavoriteChangeListener
 import com.example.itemhub.databinding.FragmentFavoriteContactsBinding
 import com.example.itemhub.model.Post
@@ -33,20 +32,15 @@ class FavoritePostsFragment : Fragment(), FavoriteChangeListener, PostDetailList
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFavoriteContactsBinding.inflate(inflater)
         emptyView = binding.emptyView
+        homeNavController = findNavController()
+
         setupRecyclerView()
         observeFavorites()
-        homeNavController = findNavController()
-        return binding.root
-    }
 
-    private fun observeFavorites() {
-        sharedViewModel.favoritesLiveData.observe(viewLifecycleOwner) {
-            favoritesPostsAdapter.updateData(it)
-            emptyView.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
-        }
+        return binding.root
     }
 
     private fun setupRecyclerView() {
@@ -56,10 +50,18 @@ class FavoritePostsFragment : Fragment(), FavoriteChangeListener, PostDetailList
         recyclerview.adapter = favoritesPostsAdapter
     }
 
+    private fun observeFavorites() {
+        sharedViewModel.favoritesLiveData.observe(viewLifecycleOwner) {
+            favoritesPostsAdapter.updateData(it)
+            emptyView.visibility = if(it.isEmpty()) View.VISIBLE else View.GONE
+        }
+    }
+
     override fun onFavoriteChanged(post: Post) {
         sharedViewModel.onFavoriteChanged(post)
     }
     override fun onCardViewClicked(post: Post) {
-        homeNavController.navigate(R.id.postDetailFragment)
+        val action = FavoritePostsFragmentDirections.actionFavoriteContactsToPostDetailFragment2(post.getId())
+        homeNavController.navigate(action)
     }
 }

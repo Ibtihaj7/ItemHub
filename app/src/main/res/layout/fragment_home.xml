@@ -42,6 +42,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <TextView
                 android:id="@+id/noResultsTextView"
                 android:layout_width="wrap_content"
@@ -54,6 +65,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/home_rv"
                 app:layout_constraintStart_toStartOf="@+id/home_rv"
                 app:layout_constraintTop_toTopOf="@+id/home_rv" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

@@ -38,26 +38,12 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
         homeNavController = findNavController()
+
         setupUI()
         setupSwipeRefreshLayout()
-
-        sharedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
+        observeLoading()
 
         return binding.root
-    }
-
-    private fun setupSwipeRefreshLayout() {
-        val swipeRefreshLayout = binding.swipeRefreshLayout
-        swipeRefreshLayout.setOnRefreshListener {
-            refreshContent()
-        }
-    }
-
-    private fun refreshContent() {
-        sharedViewModel.loadPostsData()
-        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun setupUI() {
@@ -71,15 +57,6 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
         recyclerview.layoutManager = LinearLayoutManager(requireActivity())
         allPostsAdapter = PostItemAdapter(requireContext(), emptyList(), this,this)
         recyclerview.adapter = allPostsAdapter
-    }
-
-    private fun observeSharedViewModel() {
-        sharedViewModel.postsList.observe(viewLifecycleOwner) {
-            allPostsAdapter.updateData(it)
-
-            val noResultsTextView = binding.noResultsTextView
-            noResultsTextView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-        }
     }
 
     private fun setupSearchView() {
@@ -99,16 +76,43 @@ class HomeFragment : Fragment(), FavoriteChangeListener, PostDetailListener{
         sharedViewModel.filterList(query)
     }
 
-    override fun onFavoriteChanged(post: Post) {
-        sharedViewModel.onFavoriteChanged(post)
+    private fun observeSharedViewModel() {
+        sharedViewModel.postsList.observe(viewLifecycleOwner) {
+            allPostsAdapter.updateData(it)
+
+            val noResultsTextView = binding.noResultsTextView
+            noResultsTextView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+        }
     }
 
-    companion object{
-        private const val FILTER_DELAY : Long = 500
+    private fun setupSwipeRefreshLayout() {
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshContent()
+        }
+    }
+
+    private fun refreshContent() {
+        sharedViewModel.loadPostsData()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+    private fun observeLoading() {
+        sharedViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    override fun onFavoriteChanged(post: Post) {
+        sharedViewModel.onFavoriteChanged(post)
     }
 
     override fun onCardViewClicked(post: Post) {
         val action = HomeFragmentDirections.actionHomeFragment1ToPostDetailFragment(post.getId())
         homeNavController.navigate(action)
+    }
+
+    companion object{
+        private const val FILTER_DELAY : Long = 500
     }
 }

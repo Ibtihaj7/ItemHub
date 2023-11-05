@@ -20,14 +20,20 @@ class MainViewModel @Inject constructor(
     private val _favoritesLiveData = MutableLiveData<List<Post>>()
     val favoritesLiveData: LiveData<List<Post>> = _favoritesLiveData
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     init {
         updatePostsList()
     }
 
     private fun updatePostsList() {
         viewModelScope.launch {
+            _isLoading.value = true
             _mutablePostsList.value = postRepo.getAllPosts()
             _favoritesLiveData.value = postRepo.getFavoritePosts()
+
+            _isLoading.value = false
         }
     }
 
