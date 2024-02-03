@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment1">
+
+    <fragment
+        android:id="@+id/favoriteContacts"
+        android:name="com.example.itemhub.ui.main.favorite.FavoritePostsFragment"
+        android:label="fragment_favorite_contacts"
+        tools:layout="@layout/fragment_favorite_contacts" >
+        <action
+            android:id="@+id/action_favoriteContacts_to_postDetailFragment2"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment1"
+        android:name="com.example.itemhub.ui.main.home.HomeFragment"
+        android:label="fragment_home1"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment1_to_favoriteContacts"
+            app:destination="@id/favoriteContacts" />
+        <action
+            android:id="@+id/action_homeFragment1_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.itemhub.ui.main.postdetail.PostDetailFragment"
+        android:label="fragment_post_detail"
+        tools:layout="@layout/fragment_post_detail" >
+
+        <argument
+            android:name="postId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

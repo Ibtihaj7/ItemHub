@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="post"
+            type="com.example.itemhub.model.PostItem" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/photoImageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/photo_description" />
+
+            <LinearLayout
+                android:id="@+id/topButtonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/photoImageView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{post.getTitle()}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
+                <ImageButton
+                    android:id="@+id/heart_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/heart_button_description" />
+
+                <ImageButton
+                    android:id="@+id/share_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/share"
+                    android:contentDescription="@string/share_button_description" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/topButtonsLayout"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/idTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{`id : ` + String.valueOf(post.getId())}"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userIdTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`user id : ` + String.valueOf(post.getUserId())}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description_label"
+                android:textStyle="bold"
+                android:layout_below="@id/userInfoLayout"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/bodyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{post.getBody()}"
+                android:textSize="18sp"
+                android:layout_below="@id/descriptionText" />
+
+        </RelativeLayout>
+    </ScrollView>
+</layout>
